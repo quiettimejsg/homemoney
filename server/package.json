@@ -13,16 +13,10 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.28.0",
-    "@eslint/config-array": "^0.21.0",
-    "@eslint/object-schema": "^2.1.6",
     "@jridgewell/sourcemap-codec": "^1.5.4",
     "clipboardy": "^4.0.0",
     "concurrently": "^9.2.0",
     "dotenv": "^17.2.0",
-    "eslint": "^9.31.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-node": "^11.1.0",
     "glob": "^11.0.3",
     "jest": "^30.0.4",
     "lru-cache": "^11.1.0",
