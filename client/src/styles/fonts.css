@@ -1,0 +1,17 @@
+/* 
+ * 字体定义文件
+ * 全局应用LXGWWenKai-Regular字体
+ */
+@font-face {
+  font-family: 'LXGWWenKaiGB-Regular';
+  src: url('LXGWWenKaiGB-Regular.woff2') format('woff2');
+}
+/* 全局应用自定义字体 */
+html, body, button, input, select, textarea {
+  font-family: 'LXGWWenKaiGB-Regular', sans-serif;
+}
+
+/* 确保所有文本元素都使用系统字体 */
+* {
+  font-family: 'LXGWWenKaiGB-Regular', sans-serif;
+}

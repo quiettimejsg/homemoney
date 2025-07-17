@@ -1,0 +1,87 @@
+/* 模态弹窗公共样式 */
+.modal-overlay {
+  align-items: flex-start; /* 调整为顶部对齐 */
+  padding-top: 2rem; /* 顶部预留空间 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* 覆盖整个网页宽度 */
+  height: 100%; /* 覆盖整个网页高度 */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  /* 添加关闭动画过渡（包含transform） */
+  transition: opacity var(--transition-time) ease, visibility var(--transition-time) ease, transform var(--transition-time) ease;
+  /* 初始显示状态 */
+  visibility: visible;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 调整为顶部对齐实现置顶 */
+  padding-top: 2rem; /* 顶部留出安全边距 */
+  /* 解决滚动条导致的覆盖不全问题 */
+  overflow: auto;
+  /* 移除初始transform设置，由动画类控制 */
+  transform: none;
+}
+
+/* 防止边缘闪烁 */
+.modal-overlay {
+  align-items: flex-start; /* 调整为顶部对齐 */
+  padding-top: 2rem; /* 顶部预留空间 */
+  perspective: 1000px;
+}
+
+/* 优化模糊效果 */
+.glass-effect {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* 配合Vue Transition组件，定义进入时的动画状态 */
+.modal-fade-enter-active .modal-content {
+  isolation: isolate; /* 创建新的合成层 */
+  backface-visibility: hidden;
+  will-change: transform, opacity; /* 提示浏览器优化 */
+  filter: brightness(100%); /* 触发独立图层 */
+}
+
+.modal-fade-enter-from {
+  transform: translateY(20px) scale(0.95); /* 初始向下偏移+微缩 */
+  opacity: 0;
+}
+
+.modal-fade-enter-active {
+  transition: transform var(--transition-time) ease, opacity var(--transition-time) ease;
+}
+
+.modal-fade-enter-to {
+  transform: translateY(0) scale(1); /* 结束时回到中心+正常尺寸 */
+  opacity: 1;
+}
+
+/* 离开动画 */
+.modal-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.modal-fade-leave-active {
+  transition: opacity var(--transition-time) ease, transform var(--transition-time) ease;
+}
+
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95); /* 离开时向下偏移+微缩 */
+  visibility: hidden;
+}
+
+.modal-content.glass-effect {
+  background: rgba(255, 255, 255, 0.9); /* 浅色模式背景 */
+  color: #333; /* 浅色模式文字 */
+
+    /* 浅色模式默认样式 */
+    input[type="date"] {
+      background: white;
+      color: black;
+    }
+  }

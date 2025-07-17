@@ -1,0 +1,30 @@
+/* 现代自适应布局 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 16px;
+}
+
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding-bottom: 1.5rem;
+}
+
+.lang-switcher {
+  display: flex;
+  gap: 1rem;
+}

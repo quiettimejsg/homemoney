@@ -1,0 +1,52 @@
+name: Code Lines Count
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  count-lines:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install cloc
+        run: sudo apt-get install -y cloc
+      - name: Count lines in client/src
+        run: cloc client/src
+      - name: Count lines in server/src
+        run: cloc server/src
+      - name: Install client dependencies
+        run: |
+          cd client && NODE_ENV=development npm install --include=dev --legacy-peer-deps
+          if [ ! -f node_modules/.bin/eslint ] || [ ! -d node_modules/@babel/eslint-parser ]; then npm install eslint @babel/eslint-parser; fi
+      - name: Install server dependencies
+        run: |
+          cd server && NODE_ENV=development npm install --include=dev --legacy-peer-deps
+          if [ ! -f node_modules/.bin/eslint ] || [ ! -d node_modules/@babel/eslint-parser ]; then npm install eslint @babel/eslint-parser; fi
+      - name: Debug ESLint installation
+        run: |
+          echo "Client node_modules:"
+          ls -la client/node_modules/.bin | grep eslint
+          echo "Server node_modules:"
+          ls -la server/node_modules/.bin | grep eslint
+      - name: Lint code
+        run: |
+          cd client && ./node_modules/.bin/eslint . --ext .js,.vue --fix
+          cd ../server && ./node_modules/.bin/eslint . --ext .js --fix
+
+      - name: Commit fixes
+        if: always()
+        run: |
+          git config --global user.name 'CI Bot'
+          git config --global user.email 'ci@example.com'
+          git add client/ server/
+          git commit -m 'chore: auto-fix lint issues' || echo 'No changes to commit'
+          git push origin HEAD:fix/eslint-auto-fix || echo 'Branch already exists'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

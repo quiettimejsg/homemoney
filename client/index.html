@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      :deep(body) {
+        background-color: transparent; 
+        color: #000000; /* 浅色模式文字颜色 */
+      }
+      
+    </style>
+  </head>
+  <body>
+    <script>
+      // 页面加载最早期日志 - 捕获设备信息
+      console.log('[Page Load] HTML document started loading for user agent:', navigator.userAgent);
+      
+      // 使用基础XMLHttpRequest发送初始日志（兼容性最高）
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/logs', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({
+        type: 'html_initialization',
+        message: 'HTML document started loading',
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+        url: window.location.href
+      }));
+      xhr.onload = function() {
+        console.log('[HTML Initialization Log] XHR response status:', this.status);
+      };
+      xhr.onerror = function() {
+        console.error('[HTML Initialization Log] XHR failed to send');
+      };
+    </script>
+    <div id="app"></div>
+   
+    <script type="module" src="/src/main.js"></script>
+    <br>  
+    <div style="text-align: center;">
+      <small>
+      version:__VERSION__ __BUILD_TIME__ 
+      </small>
+    </div>
+  </body>
+</html>

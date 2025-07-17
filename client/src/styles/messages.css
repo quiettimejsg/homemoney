@@ -1,0 +1,32 @@
+/* 消息提示公共样式 */
+.message-tip {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-color);
+}
+
+.message-tip.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.message-tip.error {
+  background: #ffebee;
+  color: #b71c1c;
+}
+
+
+/* 错误提示 */
+.error-tip {
+  color: #e74c3c;
+  padding: 0.5rem;
+  border: 1px solid #f8d7da;
+  background-color: #f8d7da;
+  border-radius: 4px;
+}
