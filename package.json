@@ -1,6 +1,6 @@
 {
   "name": "homemoney",
-  "version": "7.0",
+  "version": "8.0(final)",
   "scripts": {
     "start": "cd client && npm run build && cd ../server && npm run server",
     "server": "cd server && npm run server",

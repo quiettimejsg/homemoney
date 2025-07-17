@@ -1,4 +1,4 @@
-# THIS IS PREVIEW VERSION.
+# Final Version 8.0
 
 # Household Finance Manager
 
@@ -22,12 +22,12 @@ The Household Finance Manager is a multilingual financial management tool design
 
 ### Quick Start
 ```bash
-git clone https://github.com/quiettimejsg/homemoney-local250604.git
-cd homemoney-local250604
+git clone https://github.com/quiettimejsg/homemoney.git
+cd homemoney
 npm install
 cd client && npm install
 cd ../server && npm install
-npm run dev  # Start both frontend (http://localhost:5173) and backend (http://localhost:3010)
+npm run start  # Start both frontend and backend (http://localhost:3010)
 ```
 
 ## Security Note
