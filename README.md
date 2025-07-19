@@ -14,6 +14,11 @@ The Household Finance Manager is a multilingual financial management tool design
   - Interactive spending trend charts
   - Advanced search filters (by type, date range, amount)
 - **Full-Stack Architecture**: Vue.js frontend + Node.js/Express backend (run via `npm run dev`)
+- **Auto CSV Fix**: `run-fix-csv.bat` script to fix CSV encoding issues (e.g., Chinese characters)
+- **Import/Export**: Import/export for backup/restore
+- **Data Analytics**:
+  - Category-wise spending analysis
+  - Budget comparisons
 
 ## Setup & Usage
 ### Requirements
