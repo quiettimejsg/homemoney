@@ -8,7 +8,7 @@
 
 <script setup>
 import { watch, onMounted, onUnmounted } from 'vue';
-import { useLogStore } from '@/stores/log';
+
 
 // 使用 defineProps 声明组件接收的属性
 const props = defineProps({
@@ -34,8 +34,6 @@ watch(() => props.message, (newVal) => {
   // 如果有新消息内容
   if (newVal) {
     // 记录日志
-    const logStore = useLogStore();
-    logStore.addLog(newVal);
     // 如果存在旧的定时器，先清除它，避免重复触发
     if (timer) {
       clearTimeout(timer);
@@ -56,33 +54,9 @@ watch(() => props.message, (newVal) => {
   }
 }, { immediate: true }); // immediate: true 确保在组件初始化时如果 message 已经有值，也会立即执行一次 watch
 
-// 保存原始console方法
-let originalConsoleLog, originalConsoleError;
-
-// 组件挂载时重写console方法
-onMounted(() => {
-  const logStore = useLogStore();
-  originalConsoleLog = console.log;
-  originalConsoleError = console.error;
-
-  // 重写log方法
-  console.log = function (...args) {
-    originalConsoleLog.apply(console, args); // 保留原功能
-    logStore.addLog(`[console.log] ${args.join(' ')}`); // 记录到日志
-  };
-
-  // 重写error方法
-  console.error = function (...args) {
-    originalConsoleError.apply(console, args);
-    logStore.addLog(`[console.error] ${args.join(' ')}`);
-  };
-});
-
-// 组件卸载时恢复console方法
+// 组件卸载时清除定时器
 onUnmounted(() => {
   if (timer) clearTimeout(timer);
-  console.log = originalConsoleLog; // 恢复原始方法
-  console.error = originalConsoleError;
 });
 </script>
 

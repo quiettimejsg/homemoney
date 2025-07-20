@@ -18,66 +18,8 @@ import App from './App.vue';
 // 设置Axios离线拦截器
 setupAxiosInterceptors(axios);
 
-// 应用初始化日志 - 捕获设备信息
-console.log('[App Initialization] Starting application load for user agent:', navigator.userAgent);
-axios.post('/api/logs', {
-  type: 'app_initialization',
-  message: 'Application started loading',
-  userAgent: navigator.userAgent,
-  timestamp: new Date().toISOString(),
-  url: window.location.href
-}).then(() => {
-  console.log('[Initialization Log] Successfully sent to server');
-}).catch(logErr => {
-  console.error('[Initialization Log] Failed to send:', logErr);
-  // 尝试使用fetch作为备用方案发送日志
-  fetch('/api/logs', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      type: 'app_initialization_fallback',
-      message: 'Failed to send initialization log via axios',
-      error: logErr.message,
-      userAgent: navigator.userAgent,
-      timestamp: new Date().toISOString(),
-      url: window.location.href
-    })
-  }).catch(fetchErr => {
-    console.error('[Initialization Log] Fallback fetch also failed:', fetchErr);
-  });
-}); // 英语
 export { i18n };
 const pinia = createPinia();
-
-// 全局错误处理
-window.addEventListener('error', (event) => {
-  console.error('[Global Error]', event.error);
-  axios.post('/api/logs', {
-    type: 'global_js_error',
-    message: event.error.message,
-    stack: event.error.stack,
-    userAgent: navigator.userAgent,
-    timestamp: new Date().toISOString(),
-    url: window.location.href
-  }).catch(logErr => {
-    console.error('[Global Error] Failed to send error log:', logErr);
-  });
-});
-
-// 未捕获的Promise拒绝处理
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('[Unhandled Rejection]', event.reason);
-  axios.post('/api/logs', {
-    type: 'unhandled_rejection',
-    message: event.reason.message,
-    stack: event.reason.stack,
-    userAgent: navigator.userAgent,
-    timestamp: new Date().toISOString(),
-    url: window.location.href
-  }).catch(logErr => {
-    console.error('[Unhandled Rejection] Failed to send error log:', logErr);
-  });
-});
 
 const app = createApp({
   components: { App },

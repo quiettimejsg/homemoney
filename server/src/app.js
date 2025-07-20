@@ -8,29 +8,6 @@ const cors = require('cors') // 新增CORS模块
 
 const app = express()
 
-// 存储请求日志
-const requestLogs = []
-
-// 请求日志中间件
-app.use((req, res, next) => {
-  const start = Date.now()
-  const originalSend = res.send
-  res.send = function (body) {
-    const duration = Date.now() - start
-    requestLogs.push({
-      timestamp: new Date().toISOString(),
-      method: req.method,
-      path: req.path,
-      status: res.statusCode,
-      duration
-    })
-    // 只保留最近50条日志
-    if (requestLogs.length > 50) requestLogs.shift()
-    originalSend.call(this, body)
-  }
-  next()
-})
-
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -122,8 +99,6 @@ console.log(`[Static Resource] Production client dist mounted at: ${distPath}`)
 app.use('/api/expenses', require('./routes/expenses'))
 app.use('/api/todos', require('./routes/todos'))
 app.use('/api/inventory', require('./routes/inventory'))
-app.use('/api/blocklist', require('./routes/blocklist'))
-app.use('/api/logs', require('./routes/logs'))
 app.use('/api/json-files', require('./routes/jsonFiles'))
 app.use('/api/auth', require('./routes/auth'))
 
@@ -286,5 +261,3 @@ app.use('/exports', express.static(path.join(__dirname, '../exports')))
 
 // 健康检查端点路由
 app.use('/api', require('./routes/api')) // 确保路由挂载路径正确
-
-// 获取局域网IP辅助函数
