@@ -66,7 +66,7 @@ sequelize.sync({ alter: true }).then(() => {
 
 // 配置CORS策略（开发环境）
 app.use(cors({
-  origin: function (origin, callback) { const allowedOrigins = ['http://localhost:5173', 'http://192.168.0.197:5173', 'http://127.0.0.1:5173', 'http://192.168.0.197:3010', 'http://localhost:3010']; if (allowedOrigins.includes(origin) || !origin) { callback(null, origin) } else { callback(new Error('Not allowed by CORS')) } }, // 动态验证允许的源并返回具体origin
+  origin: function (origin, callback) { const allowedOrigins = ['http://localhost:5173', 'http://192.168.0.197:5173', 'http://127.0.0.1:5173', 'http://192.168.0.197:3010', 'http://localhost:3010']; if (allowedOrigins.includes(origin) || !origin || (origin && origin.endsWith('ngrok-free.app'))) { callback(null, origin) } else { callback(new Error('Not allowed by CORS')) } }, // 动态验证允许的源并返回具体origin
 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'User-Agent'],
