@@ -288,7 +288,7 @@
   },
   "header": {
     "notificationCenter": "通知中心",
-    "markAllAsRead": "全部标记已读",
+    "markAllAsRead": "已读",
     "noNotifications": "暂无通知",
     "loadFailed": "加载失败",
     "addSuccess": "添加成功",

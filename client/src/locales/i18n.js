@@ -23,24 +23,15 @@ console.log('支持的语言列表为:', supportedLanguages);
 // 检查浏览器语言是否在支持列表中
 let defaultLocale = 'en-US'; // 默认语言
 console.log('初始默认语言设置为:', defaultLocale);
-// 特殊处理香港和台湾地区语言，使用zh-CL
-if (browserLanguage === 'zh-HK' || browserLanguage === 'zh-tw' || browserLanguage === 'zh-TW' || browserLanguage === 'zh-hk') {
+// 若浏览器语言为中文相关，默认使用 zh-CL
+if (browserLanguage.startsWith('zh')) {
   defaultLocale = 'zh-CL';
-  console.log('浏览器语言为香港或台湾地区语言，默认语言更新为:', defaultLocale);
+  console.log('浏览器语言为中文，默认语言更新为:', defaultLocale);
 } else if (supportedLanguages.includes(browserLanguage)) {
   defaultLocale = browserLanguage;
   console.log('浏览器语言在支持列表中，默认语言更新为:', defaultLocale);
 } else {
-  // 处理类似 'zh' 这种情况，取前两位匹配
-  const shortLanguage = browserLanguage.slice(0, 2);
-  console.log('浏览器语言不在支持列表中，截取前两位:', shortLanguage);
-  const matchedLanguage = supportedLanguages.find(lang => lang.startsWith(shortLanguage));
-  if (matchedLanguage) {
-    defaultLocale = matchedLanguage;
-    console.log('找到匹配的语言，默认语言更新为:', defaultLocale);
-  } else {
-    console.log('未找到匹配的语言，默认语言保持不变:', defaultLocale);
-  }
+  console.log('未找到匹配的语言，默认语言保持不变:', defaultLocale);
 }
 /**
  * 初始化i18n实例
