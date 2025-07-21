@@ -31,10 +31,11 @@
     <el-icon><List /></el-icon>
     {{ t('todo.title') }}
   </el-button>
-  <el-button type="info" @click="$router.push('/inventory')" size="default">
+<!-- 此功能因无人使用而移除 -->
+<!-- <el-button type="info" @click="$router.push('/inventory')" size="default">
     <el-icon><Box /></el-icon>
     {{ t('inventory.title') }}
-  </el-button>
+  </el-button> -->
   <el-upload
     class="upload-excel"
     action="/api/import/excel"
