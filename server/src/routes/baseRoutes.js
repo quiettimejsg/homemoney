@@ -7,7 +7,7 @@ const express = require('express')
 const router = express.Router()
 const { connectionStatus } = require('../db')
 const fs = require('fs')
-// 移除未使用的csv模块引用
+const path = require('path')
 
 /**
  * @api {get} /api 基础健康检查
@@ -24,7 +24,10 @@ router.get('/api/health', (req, res) => {
       version: '1.0.0',
       uptime: process.uptime().toFixed(2) + 's',
       database: connectionStatus(),
-      initialData: fs.existsSync('../exports/expenses_initial.csv')
+      initialData: fs.existsSync('../exports/expenses_initial.csv'),
+      nodeEnv: process.env.NODE_ENV,
+      distPath: path.join(__dirname, '../../../client/dist'),
+      distExists: fs.existsSync(path.join(__dirname, '../../../client/dist'))
     })
 })
 

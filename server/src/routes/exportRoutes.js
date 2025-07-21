@@ -7,11 +7,10 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const path = require('path')
-const db = require('../db')
 const ExportService = require('../utils/export')
 const ImportService = require('../utils/import')
 
-const exportService = new ExportService(db)
+const exportService = new ExportService()
 const importService = new ImportService()
 
 // 配置文件上传

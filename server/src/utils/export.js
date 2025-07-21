@@ -1,15 +1,14 @@
 const XLSX = require('xlsx')
 const fs = require('fs')
 const path = require('path')
+const { Expense } = require('../db')
 
 class ExportService {
-  constructor (db) {
-    this.db = db
-  }
+  constructor () {}
 
   // 获取完整消费数据（异步方法）
   async getFullData () {
-    return await this.db.getExpenses() // 使用数据库提供的getExpenses方法获取数据
+    return await Expense.findAll({ raw: true }) // 使用 Expense 模型获取数据
   }
 
   // 生成CSV文件（异步方法）

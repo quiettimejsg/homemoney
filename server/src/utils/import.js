@@ -1,5 +1,6 @@
 const XLSX = require('xlsx')
-const { addExpensesBatch } = require('../db')
+const { Expense } = require('../db')
+const dayjs = require('dayjs')
 
 class ImportService {
   async importFromExcel (filePath) {
@@ -13,10 +14,20 @@ class ImportService {
       type: item['支類'] || item.Category,
       remark: item['事由'] || item.Description || '',
       amount: parseFloat((item['錢數（文）'] || item['Amount ($)'] || '').toString().replace(/[^0-9.]/g, '')) || 0,
-      time: item['用日'] || item.Date
-    }))
+      time: dayjs(item['用日'] || item.Date).toDate()
+    })).filter(r => r.type && r.amount > 0 && r.time)
 
-    return await addExpensesBatch(records)
+    if (records.length === 0) {
+      return { success: true, message: '没有有效数据被导入。' }
+    }
+
+    try {
+      await Expense.bulkCreate(records)
+      return { success: true, message: `成功导入 ${records.length} 条记录。` }
+    } catch (error) {
+      console.error('导入Excel数据失败:', error)
+      throw new Error('数据库插入失败。')
+    }
   }
 }
 

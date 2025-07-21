@@ -2,10 +2,10 @@
   "name": "homemoney",
   "version": "8.0(final)",
   "scripts": {
-    "start": "cd client && npm run build && cd ../server && npm run server",
+    "start": "cross-env NODE_ENV=production node server/src/app.js",
     "server": "cd server && npm run server",
     "client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev": "node server/src/app.js",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "build": "cd client && npm run build"
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
+    "cross-env": "^7.0.3",
     "eslint-config-standard": "^17.1.0"
   }
 }
