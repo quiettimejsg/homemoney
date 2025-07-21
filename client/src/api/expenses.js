@@ -17,7 +17,7 @@ export const ExpenseAPI = {
     }
   },
 
-  async getExpenses (page = 1, limit = 1000) {
+  async getExpenses (page = 1, limit = 1000000) {
     console.log('[Expense API] 尝试获取消费数据，API基础URL:', API_BASE);
     try {
       const response = await axios.get(`${API_BASE}/expenses`, {
