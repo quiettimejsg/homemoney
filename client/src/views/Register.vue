@@ -3,7 +3,7 @@
     <div class="login-card">
         <div class="language-selector">
         <el-select v-model="currentLanguage" @change="handleLanguageChange" size="small">
-          <el-option label="文言" value="zh-CL"></el-option>
+          <el-option label="中文" value="zh-CL"></el-option>
           <el-option label="English" value="en-US"></el-option>
         </el-select>
       </div>

@@ -116,7 +116,7 @@ const { switchLanguage } = useLanguageSwitch();
 // 定义支持的语言列表
 const languages = [
   { code: 'en-US', label: 'English(US)' },
-  { code: 'zh-CL', label: '文言（中國）' }
+  { code: 'zh-CL', label: '中文' }
 ];
 
 // 通知系统相关数据和方法
