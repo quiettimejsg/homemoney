@@ -17,12 +17,19 @@ export const ExpenseAPI = {
     }
   },
 
-  async getExpenses () {
+  async getExpenses (page = 1, limit = 1000) {
     console.log('[Expense API] 尝试获取消费数据，API基础URL:', API_BASE);
     try {
-      const response = await axios.get(`${API_BASE}/expenses`);
-      // 确保返回数据是数组
+      const response = await axios.get(`${API_BASE}/expenses`, {
+        params: { page, limit }
+      });
+      // 适配新的API响应格式
       if (response && response.data) {
+        // 新格式：{ data: [...], total: number, page: number, limit: number }
+        if (response.data.data && Array.isArray(response.data.data)) {
+          return response.data.data;
+        }
+        // 兼容旧格式：直接返回数组
         return Array.isArray(response.data) ? response.data : [];
       }
       return [];

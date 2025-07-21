@@ -385,38 +385,38 @@ const fetchData = async (forceRefresh = false) => {
   await loadCsvExpenses();
 };
 
-// 载入 CSV 数据
+// 载入消费数据（从SQLite数据库）
 const loadCsvExpenses = async () => {
   if (isLoadingCsv.value) return;
   isLoadingCsv.value = true;
 
   try {
-    const res = await axios.get(`/api/expenses/csv/raw?timestamp=${Date.now()}`);
-    const rawText = res.data;
+    // 使用新的API端点获取所有数据
+    const res = await axios.get(`/api/expenses?limit=10000`);
+    
+    let parsedData = [];
+    
+    // 适配新的API响应格式
+    if (res.data && res.data.data && Array.isArray(res.data.data)) {
+      // 新格式：{ data: [...], total: number, page: number, limit: number }
+      parsedData = res.data.data;
+    } else if (Array.isArray(res.data)) {
+      // 兼容旧格式：直接返回数组
+      parsedData = res.data;
+    }
 
-    const result = Papa.parse(rawText, {
-      header: true,
-      skipEmptyLines: true
-    });
-
-    const parsedData = result.data
+    // 确保数据格式正确
+    csvExpenses.value = parsedData
       .map(item => ({
-        type: item.type?.trim(),
-        remark: item.remark?.trim(),
+        type: item.type?.trim() || item.type,
+        remark: item.remark?.trim() || item.remark,
         amount: Number(item.amount),
-        time: item.time?.trim()
+        time: item.time
       }))
       .filter(item => !isNaN(item.amount) && item.amount > 0);
 
-    csvExpenses.value = parsedData;
-
     if (csvExpenses.value.length === 0) {
-      const hasRawData = Array.isArray(result.data) && result.data.length > 0;
-      if (hasRawData) {
-        console.warn('loadCsvExpenses: No valid data found in API response');
-      } else {
-        console.log('loadCsvExpenses: API returned empty data');
-      }
+      console.warn('loadCsvExpenses: No valid data found in API response');
     } else {
       console.log('loadCsvExpenses: Data loaded, count:', csvExpenses.value.length);
     }
