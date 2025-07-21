@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <tr v-for="expense in expenses" :key="expense.id">
-          <td>{{ expense.time }}</td>
+          <td>{{ formatDate(expense.time) }}</td>
           <td>
             <span class="type-tag" :style="{ backgroundColor: getTypeColor(expense.type) }">
               {{ expense.type }}
@@ -60,8 +60,15 @@ export default {
   },
 
   setup () {
+    const formatDate = (dateString) => {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toISOString().split('T')[0];
+    };
+
     return {
-      getTypeColor
+      getTypeColor,
+      formatDate
     };
   }
 };

@@ -321,9 +321,8 @@ const handleAddRecord = async () => {
     };
 
     // 使用与Expenses.vue相同的批量提交接口，明确指定为1条记录
-    await axios.post('/api/expenses/batch', [expenseData], {
+    await axios.post('/api/expenses', expenseData, {
       headers: {
-        'X-Record-Count': '1',
         'Content-Type': 'application/json'
       }
     });
